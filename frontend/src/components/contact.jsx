@@ -8,20 +8,19 @@ const Contact = () => {
     const address = "1371 GA-40, Kingsland, GA";
 
     const boxStyle = {
-        backgroundColor: 'grey',
+        backgroundColor: 'rgba(169, 169, 169, 0.0)',
         padding: '10px',
-        textAlign: 'left',
+        textAlign: 'center',
         borderRadius: '5px',
-        color: 'white',
+        color: 'black',
         position: 'absolute',
-        top: '58%',
-        right: '-15%',
-        transform: 'translate(-50%)',
+        top: '82%',
+        left: '5%',
         width: '30%',
     };
 
     const linkStyle = {
-        color: 'white',
+        color: 'black',
         textdecoration: 'none',
 
     }
