@@ -1,0 +1,39 @@
+.allp-container {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+    background-color: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.allp-loading, .allp-error {
+    text-align: center;
+}
+
+.allp-prices-list {
+    list-style: none;
+    padding: 0;
+}
+
+.allp-price-item {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
+
+.allp-back-homepage-btn {
+    display: block;
+    margin: 20px 0px 20px 0px;
+    padding: 10px 15px;
+    background-color: rgba(0, 0, 0, 0.713);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.allp-back-homepage-btn:hover {
+    background-color: black;
+}

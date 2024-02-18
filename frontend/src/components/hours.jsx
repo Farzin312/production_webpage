@@ -1,5 +1,5 @@
-// In your Hours.js file
 import React from 'react';
+import './styling/hours.css'; 
 
 const Hours = () => {
     const hours = [
@@ -15,15 +15,13 @@ const Hours = () => {
     const currentDay = getCurrentDay();
 
     return (
-        <div>
+        <div className="hrs-container">
             <h2>Hours of Operation</h2>
-            <ul>
+            <ul className="hrs-list">
                 {hours.map((dayInfo, index) => (
                     <li 
                         key={index} 
-                        style={{ 
-                            backgroundColor: dayInfo.day === currentDay ? 'rgba(128, 128, 128, 0.5)' : 'transparent' 
-                        }}
+                        className={dayInfo.day === currentDay ? 'hrs-current-day' : ''}
                     >
                         {dayInfo.day}: {dayInfo.open}–{dayInfo.close}
                     </li>
@@ -40,5 +38,3 @@ const getCurrentDay = () => {
 };
 
 export default Hours;
-
-

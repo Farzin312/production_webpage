@@ -1,0 +1,139 @@
+.mp-manager {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    margin-top: -15px;
+    max-width: 100%;
+}
+
+.mp-manager h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.mp-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.mp-item {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    line-height: 0;
+    transition: box-shadow 0.3s ease;
+}
+
+.mp-item:hover {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.mp-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+}
+
+.mp-delete-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 8px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+}
+
+.mp-delete-button:hover {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+.mp-item:hover .mp-delete-button {
+    opacity: 1; 
+}
+
+.mp-upload-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+    flex-wrap: wrap;
+}
+
+.mp-input {
+    flex-grow: 1;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.mp-file-info {
+    flex-grow: 1;
+    padding: 5px 10px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: left;
+    margin-right: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mp-add-button {
+    padding: 8px 15px;
+    background-color: #343a40;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.mp-add-button:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    .mp-manager {
+        padding: 15px;
+    }
+
+    .mp-list {
+        grid-template-columns: 1fr;
+    }
+
+    .mp-upload-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .mp-file-info {
+        margin-bottom: 10px;
+    }
+
+    .mp-delete-button {
+        width: 25px; 
+        height: 25px; 
+        padding: 4px; 
+        font-size: 8px; 
+    }
+}

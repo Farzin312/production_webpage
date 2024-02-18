@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import './styling/header.css'; 
 
 const Header = () => {
     const [currentDateTime, setCurrentDateTime] = useState('');
 
     useEffect(() => {
+        const easternTimeZone = 'America/New_York';
         const updateDateTime = () => {
-            const easternTimeZone = 'America/New_york';
             const now = new Date();
             const timeString = new Intl.DateTimeFormat('en-US', { 
                 timeStyle: 'medium', 
@@ -24,28 +25,11 @@ const Header = () => {
         return () => clearInterval(timer);
     }, []);
 
-    const boxStyle = {
-        backgroundColor: 'white',
-        padding: '10px',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        borderRadius: '5px',
-        color: 'black',
-        width: '100%',
-        height: '60px'
-    };
-
-    const dateTimeStyle = {
-        marginRight: '20px',
-        textAlign: 'right'
-    }
-
     return (
-        <div style={boxStyle}>
+        <div className="hdr-header">
             <h1>South Link</h1>
-            <div style={dateTimeStyle}>
-            <p>{currentDateTime}</p>
+            <div className="hdr-date-time">
+                <p>{currentDateTime}</p>
             </div>
         </div>
     );

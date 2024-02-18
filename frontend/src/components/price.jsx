@@ -1,66 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGasPump } from '@fortawesome/free-solid-svg-icons';
+import { faGasPump, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
+import './styling/price.css'; 
 
 const GasPrices = () => {
-    const boxStyle = {
-        backgroundColor: 'white',
-        padding: '10px',
-        textAlign: 'center',
-        borderRadius: '5px',
-        color: 'Black',
-        position: 'absolute',
-        top: '58%',
-        left: '-5%',
-        width: '50%',
-        height: '20%'
-    };
-
-    const graphStyle = {
-        padding: '10px',
-        textAlign: 'left',
-        borderRadius: '5px',
-        color: 'Black',
-        position: 'absolute',
-        top: '0%',
-        right: '-80%',
-        width: '70%',
-        height: '20%'
-    }
+    const [allPrices, setAllPrices] = useState([]);
     const [prices, setPrices] = useState({});
-    const [plotUrl, setPlotUrl] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    
+    const navigate = useNavigate();
+
     useEffect(() => {
         const fetchPrices = async () => {
             try {
-                setLoading(true);
-                const response = await axios.get('http://127.0.0.1:5000/gasprices');
-                setPrices(response.data);
-                setError(null);
-            } catch (error) {
-                console.error('Error fetching data: ', error);
-                setError('Failed to fetch data');
-            } finally {
-                setLoading(false);
-            }
-        };
-    
-        fetchPrices();
-    }, []);
-    useEffect(() => {
-        const fetchPrices = async () => {
-            try {
-                setLoading(true);
                 const pricesResponse = await axios.get('http://127.0.0.1:5000/gasprices');
                 setPrices(pricesResponse.data);
-    
-                const plotResponse = await axios.get('http://127.0.0.1:5000/gasprices/plot', { responseType: 'blob' });
-                setPlotUrl(URL.createObjectURL(plotResponse.data));
-                
-                setError(null);
+                const allPricesResponse = await axios.get('http://127.0.0.1:5000/all_gas_prices');
+                setAllPrices(allPricesResponse.data);
             } catch (error) {
                 console.error('Error fetching data: ', error);
                 setError('Failed to fetch data');
@@ -68,24 +26,66 @@ const GasPrices = () => {
                 setLoading(false);
             }
         };
-    
+
         fetchPrices();
     }, []);
+
+    const calculatePercentageChange = (currentPrice, previousPrice) => {
+        if (!previousPrice) return null;
+        return ((currentPrice - previousPrice) / previousPrice) * 100;
+    };
+
+    const renderPriceWithChange = (fuelType, price, index) => {
+        let previousPrice = null;
+        for (let i = index + 1; i < allPrices.length; i++) {
+            if (allPrices[i][fuelType] !== undefined) {
+                previousPrice = allPrices[i][fuelType];
+                console.log(`Previous price for ${fuelType}: ${previousPrice}`);
+                break;
+            }
+        }
     
+        const percentageChange = calculatePercentageChange(price, previousPrice);
+        let priceChangeIcon = null;
+        let priceChangeText = '';
+    
+        if (percentageChange !== null && percentageChange !== 0) {
+            const isPriceUp = percentageChange > 0;
+            priceChangeIcon = (
+                <FontAwesomeIcon
+                    icon={isPriceUp ? faArrowUp : faArrowDown}
+                    style={{ color: isPriceUp ? 'green' : 'red', marginLeft: '5px' }}
+                />
+            );
+            priceChangeText = `(${isPriceUp ? '+' : ''}${percentageChange.toFixed(2)}%)`;
+        }
+    
+        return (
+            <h3 key={index}>
+                {fuelType}: ${price.toFixed(2)} {priceChangeIcon} {priceChangeText}
+            </h3>
+        );
+    };
+    
+      
+    const showAllPrices = () => {
+        navigate('/all_prices'); 
+    };
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
     
     return (
-        <div style={boxStyle}>
-            <h2 style={{ textAlign: 'center' }}>
-                <FontAwesomeIcon icon={faGasPump} /> Fuel
+        <div className="gas-prices-container"> 
+            <h2 className="gas-prices-title">
+                <FontAwesomeIcon icon={faGasPump} /> Fuel Prices
             </h2>
-            {Object.entries(prices).map(([fuelType, price], index) => (
-                <h3 key={index}>{fuelType}: {price}</h3>
-            ))}
-            <div style={graphStyle}>
-            {plotUrl && <img src={plotUrl} alt="Gas Prices Plot" style={{ width: '100%', height: 'auto' }} />}
-            </div>
+            {Object.entries(prices).map(([fuelType, price], index) => 
+                renderPriceWithChange(fuelType, price, index)
+            )}
+            <button onClick={showAllPrices} className="view-all-button">
+                View All Prices 
+            </button>
         </div>
     );
 };
