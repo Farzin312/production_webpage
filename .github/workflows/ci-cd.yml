@@ -9,38 +9,44 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.9'
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r backend/requirements.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
 
-    - name: Run tests
-      run: |
-        cd backend
-        pytest
+      - name: Run tests
+        run: |
+          cd backend
+          pytest
 
   deploy:
     needs: build-and-test
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Build and push Docker images
-      run: |
-        docker build -t myapp-backend:latest ./backend
-        docker build -t myapp-frontend:latest ./frontend
-        # Push images to a Docker registry (e.g., Docker Hub, GitHub Packages)
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-    - name: Deploy to server
-      run: |
-        # Add your deployment commands here (e.g., SSH into server, pull images, restart services)
-        echo "Deploying to server..."
+      - name: Build and push Docker images
+        run: |
+          docker build -t myapp-backend:latest ./backend
+          docker tag myapp-backend:latest ${{ secrets.DOCKER_USERNAME }}/myapp-backend:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/myapp-backend:latest
+
+          docker build -t myapp-frontend:latest ./frontend
+          docker tag myapp-frontend:latest ${{ secrets.DOCKER_USERNAME }}/myapp-frontend:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/myapp-frontend:latest
+
+      - name: Deploy to server
+        run: |
+          # Add your deployment commands here (e.g., SSH into server, pull images, restart services)
+          echo "Deploying to server..."
