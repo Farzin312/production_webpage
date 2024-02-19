@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5001"
+    environment:
+      FLASK_APP: server.py
+      FLASK_RUN_HOST: 0.0.0.0
+    volumes:
+      - ./backend:/usr/src/app
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
