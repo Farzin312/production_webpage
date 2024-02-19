@@ -5,6 +5,7 @@ load_dotenv()
 
 class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False 
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:' 
     SECRET_KEY = os.environ.get('SECRET_KEY')
     SECURITY_PASSWORD_SALT = os.environ.get('SECURITY_PASSWORD_SALT')
     MAIL_SERVER = os.environ.get('MAIL_SERVER') 
@@ -25,8 +26,8 @@ class TestConfig(Config):
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///gas_prices.db'
     SQLALCHEMY_BINDS = {
+        'scraping': 'sqlite:///scraping.db',
         'pictures': 'sqlite:///pictures.db',
         'auth': 'sqlite:///auth.db',
         'review': 'sqlite:///review.db',
@@ -35,8 +36,8 @@ class DevelopmentConfig(Config):
     
 class ProductionConfig(Config):
     DEBUG = False
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///gas_prices.db'
     SQLALCHEMY_BINDS = {
+        'scraping': 'sqlite:///scraping.db',
         'pictures': 'sqlite:///pictures.db',
         'auth': 'sqlite:///auth.db',
         'review': 'sqlite:///review.db',

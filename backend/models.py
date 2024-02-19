@@ -4,6 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 db = SQLAlchemy()
 
 class GasPrice(db.Model):
+    __bind_key__ = 'scraping'
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime, default=db.func.current_timestamp())
     regular = db.Column(db.Float, nullable=False)

@@ -34,6 +34,6 @@ app.register_blueprint(goods_bp, url_prefix=os.environ.get('url'))
 
 
 if __name__ == '__main__':
-    start_scheduler(app)
+    start_scheduler()
     app.run(debug=True)
 
