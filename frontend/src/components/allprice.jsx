@@ -12,7 +12,7 @@ const AllPrices = () => {
     useEffect(() => {
         const fetchAllPrices = async () => {
             try {
-                const response = await axios.get('http://127.0.0.1:5000/all_gas_prices');
+                const response = await axios.get(process.env.REACT_APP_ALL_GAS_URL);
                 setAllPrices(response.data);
             } catch (error) {
                 console.error('Error fetching all prices: ', error);

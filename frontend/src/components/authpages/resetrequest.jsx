@@ -11,7 +11,7 @@ const ResetPasswordRequest = () => {
         event.preventDefault();
 
         try {
-            const response = await fetch('http://127.0.0.1:5000/request_reset', {
+            const response = await fetch(process.env.REACT_APP_RESET_REQUEST_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
