@@ -3,7 +3,7 @@ from flask_cors import CORS
 from flask_mail import Mail
 from models import db
 import os
-from routes.scraping import scraping_bp, start_scheduler
+from routes.scraping import scraping_bp, start_scraper_thread
 from routes.pictures import pictures_bp 
 from routes.owner_auth import auth_bp
 from routes.review import review_bp
@@ -32,8 +32,8 @@ app.register_blueprint(pictures_bp, url_prefix= os.environ.get('url'))
 app.register_blueprint(review_bp, url_prefix= os.environ.get('url'))
 app.register_blueprint(goods_bp, url_prefix=os.environ.get('url'))
 
+start_scraper_thread(app)
 
 if __name__ == '__main__':
-    start_scheduler()
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5001)
 

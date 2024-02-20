@@ -10,6 +10,6 @@ EXPOSE 5001
 
 ENV FLASK_APP=server.py
 ENV FLASK_RUN_HOST=0.0.0.0
-ENV TZ=America/New_York
+ENV FLASK_ENV=production
 
 CMD ["flask", "run", "--port=5001"]

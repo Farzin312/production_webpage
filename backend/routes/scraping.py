@@ -3,7 +3,7 @@ from models import db, GasPrice
 import requests
 from bs4 import BeautifulSoup
 import threading
-from apscheduler.schedulers.background import BackgroundScheduler
+import time
 
 scraping_bp = Blueprint('scraping', __name__)
 
@@ -58,13 +58,15 @@ def get_all_gas_prices():
         current_app.logger.error(f"Error in get_all_gas_prices: {e}")
         return jsonify({'error': str(e)}), 500
 
-def start_scheduler():
-    scheduler = BackgroundScheduler()
-    scheduler.add_job(gas_prices, 'cron', hour='12', minute='57')
-    scheduler.start()
+def run_scraper_periodically(app):
+    while True:
+        gas_prices(app)
+        time.sleep(24 * 60 * 60)
 
-if __name__ == '__main__':
-    start_scheduler()
+def start_scraper_thread(app):
+    scraper_thread = threading.Thread(target=run_scraper_periodically, args=(app,))
+    scraper_thread.daemon = True
+    scraper_thread.start()
 
 
 
