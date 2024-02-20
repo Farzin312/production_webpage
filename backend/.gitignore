@@ -3,3 +3,5 @@
 /routes/__pycache__
 /.env
 /tests/__pycache__
+/ssh
+/ssh.pub

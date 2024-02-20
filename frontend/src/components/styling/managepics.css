@@ -81,12 +81,16 @@
 
 .mp-input {
     flex-grow: 1;
+    flex-shrink: 1;
+    min-width:100px;
     padding: 8px;
     border-radius: 4px;
 }
 
 .mp-file-info {
     flex-grow: 1;
+    flex-shrink: 1;
+    max-width: 100%;
     padding: 5px 10px;
     background-color: white;
     border: 1px solid #ddd;
@@ -124,10 +128,12 @@
     .mp-upload-container {
         flex-direction: column;
         align-items: stretch;
+        padding: 5px;
     }
 
     .mp-file-info {
         margin-bottom: 10px;
+        margin-right: 0;
     }
 
     .mp-delete-button {
@@ -136,4 +142,12 @@
         padding: 4px; 
         font-size: 8px; 
     }
+
+    mp-input,
+    .mp-add-button {
+        margin-bottom: 10px; 
+        width: 100%;
+    }
 }
+
+

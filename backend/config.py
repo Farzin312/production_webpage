@@ -14,7 +14,7 @@ class Config:
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')  
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD') 
     UPLOAD_FOLDER = os.environ.get('UPLOAD_FOLDER') 
-    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'HEIC'}
+    ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif', 'heic'}
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024 
 
 
