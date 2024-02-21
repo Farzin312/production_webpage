@@ -12,4 +12,4 @@ ENV FLASK_APP=server.py
 ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_ENV=production
 
-CMD ["flask", "run", "--port=5001"]
+CMD ["gunicorn", "-b", "0.0.0.0:5001", "server:app"]
