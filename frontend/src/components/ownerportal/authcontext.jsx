@@ -1,10 +1,17 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    useEffect(() => {
+        const token = localStorage.getItem('authToken');
+        if (token) {
+            setIsAuthenticated(true);
+        }
+    }, []);
 
     const login = (token) => {
         localStorage.setItem('authToken', token);

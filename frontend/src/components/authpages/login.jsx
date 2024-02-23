@@ -7,11 +7,11 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
-    const { isAuthenticated } = useContext(AuthContext);
+    const { isAuthenticated, login } = useContext(AuthContext);  
 
     useEffect(() => {
         if (isAuthenticated) {
-            navigate('/admin'); 
+            navigate('/admin');
         }
     }, [isAuthenticated, navigate]);
 
@@ -28,7 +28,9 @@ const Login = () => {
             });
 
             if (response.ok) {
-                navigate('/dashboard');
+                const { token } = await response.json();
+                login(token);  
+                navigate('/admin');
             } else {
                 const errorData = await response.json();
                 setError(errorData.error || 'Login failed');

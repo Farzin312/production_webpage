@@ -29,7 +29,7 @@ const Register = () => {
             });
 
             if (response.ok) {
-                navigate('/dashboard');
+                navigate('/admin');
             } else {
                 const errorData = await response.json();
                 setError(errorData.error || 'Registration failed');

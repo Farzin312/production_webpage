@@ -44,7 +44,7 @@ def add_picture():
             return jsonify({"error": "A picture with the same name already exists"}), 409
     
     file.save(filepath)
-    file_url = url_for('pictures.uploaded_file', filename=filename, _external=True)
+    file_url = url_for('pictures.uploaded_file', filename=filename, _external=True, _scheme='https')
 
     new_picture = Picture(url=file_url)
     db.session.add(new_picture)
